@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #ff7e5f, #feb47b); /* Colorful gradient background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2em;
+            color: #ff7e5f;
+            margin-bottom: 20px;
+        }
+
+        select, input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 6px;
+            border: 2px solid #f5a623;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        select:focus, input[type="text"]:focus, input[type="password"]:focus {
+            border-color: #ff7e5f; /* Focus color for input fields */
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #ff7e5f;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #feb47b; /* Button hover effect */
+        }
+
+        .error {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        /* Small Devices */
+        @media (max-width: 480px) {
+            .login-container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <!-- Role selection at the top -->
+            <select id="role" required>
+                <option value="">Select Role</option>
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+            </select>
+            
+            <!-- Username and password fields (initially disabled) -->
+            <input type="text" id="username" placeholder="Username" required disabled>
+            <input type="password" id="password" placeholder="Password" required disabled>
+            
+            <button type="submit" disabled>Login</button>
+        </form>
+        <p class="error" id="error-message"></p>
+    </div>
+
+    <script>
+        // Get the elements
+        const roleSelect = document.getElementById("role");
+        const usernameInput = document.getElementById("username");
+        const passwordInput = document.getElementById("password");
+        const submitButton = document.querySelector("button");
+        const errorMessage = document.getElementById("error-message");
+
+        // Event listener for role selection
+        roleSelect.addEventListener("change", function() {
+            if (roleSelect.value) {
+                // Enable the username, password fields, and submit button after role selection
+                usernameInput.disabled = false;
+                passwordInput.disabled = false;
+                submitButton.disabled = false;
+            } else {
+                // Disable fields and button if no role is selected
+                usernameInput.disabled = true;
+                passwordInput.disabled = true;
+                submitButton.disabled = true;
+            }
+        });
+
+        // Form submission logic
+        document.getElementById("loginForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            
+            // Get input values
+            const username = usernameInput.value;
+            const password = passwordInput.value;
+            const role = roleSelect.value;
+
+            // Reset the error message
+            errorMessage.textContent = "";
+
+            // Simple validation
+            if (username === "" || password === "" || role === "") {
+                errorMessage.textContent = "All fields are required.";
+                return;
+            }
+
+            // Example logic for handling different roles (could be extended with backend authentication)
+            if (role === "admin") {
+                // Simulate admin login
+                alert("Logged in as Admin");
+                // Redirect to Admin Dashboard
+                window.location.href = "admin-dashboard.html"; // Change to the actual admin dashboard page
+            } else if (role === "user") {
+                // Simulate user login
+                alert("Logged in as User");
+                // Redirect to Home Page
+                window.location.href = "home.html"; // Change to the actual home page
+            }
+        });
+    </script>
+</body>
+</html>
